@@ -13,26 +13,29 @@ import {
   Res,
   HttpStatus,
 } from '@nestjs/common';
-import { CreateCatDto } from './create-cat.dto';
+import { CreateCatDto } from './dto/create-cat.dto';
+import { CatsService } from './cats.service';
+import { Cat } from './interface/cat.interface';
 
 @Controller('cats')
 export class CatsController {
+  constructor(private readonly catsService: CatsService) {}
   @Post('create')
   @Header('content-type', 'application/json')
-  create(@Body() createCatDto: CreateCatDto) {
-    const createCat = createCatDto;
-    console.log('createCatDto', createCat);
-    if (createCat.hasOwnProperty('name')) {
-      return 'This action adds a new cat';
+  async create(@Body() createCatDto: CreateCatDto) {
+    if (createCatDto.hasOwnProperty('name')) {
+      this.catsService.create(createCatDto);
     }
   }
 
+  // @Get('findAll')
+  // async findAll(@Query() query, @Res() res) {
+  //   return this.catsService.findAll();
+  // }
   @Get('findAll')
-  findAll(@Query() query, @Res() res) {
-    res.status(HttpStatus.OK).json([query.limit]);
-    // return `This action returns all cats (limit: ${query.limit} items)`;
+  async findAll(): Promise<Cat[]> {
+    return this.catsService.findAll();
   }
-
   @Get(':id')
   findOne(@Param('id') id) {
     return `This action returns a #${id} cat`;

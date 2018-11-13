@@ -12,10 +12,12 @@ import {
   Req,
   Res,
   HttpStatus,
+  UsePipes,
 } from '@nestjs/common';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { CatsService } from './cats.service';
 import { Cat } from './interface/cat.interface';
+import { CustomValidationPipe } from 'src/common/pipes/custom-validation/custom-validation.pipe';
 
 @Controller('cats')
 export class CatsController {
@@ -37,6 +39,7 @@ export class CatsController {
     return this.catsService.findAll();
   }
   @Get(':id')
+  @UsePipes(new CustomValidationPipe())
   findOne(@Param('id') id) {
     return `This action returns a #${id} cat`;
   }

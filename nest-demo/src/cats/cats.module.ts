@@ -9,11 +9,11 @@ import { LoggerMiddleware } from 'src/common/middlewares/logger.middleware';
 })
 export class CatsModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void | MiddlewareConsumer {
-    consumer
-      .apply(LoggerMiddleware)
-      .exclude(
-        { path: 'cats', method: RequestMethod.GET },
-      )
-      .forRoutes('cats');
+    // consumer
+    //   .apply(LoggerMiddleware)
+    //   .exclude(
+    //     { path: 'cats', method: RequestMethod.GET },
+    //   )
+    //   .forRoutes('cats');
   }
 }

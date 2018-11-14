@@ -13,16 +13,21 @@ import {
   Res,
   HttpStatus,
   UsePipes,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { CatsService } from './cats.service';
 import { Cat } from './interface/cat.interface';
 import { CustomValidationPipe } from 'src/common/pipes/custom-validation/custom-validation.pipe';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { RolesGuard } from 'src/common/guard/roles.guard';
 
 @Controller('cats')
+@UseGuards(RolesGuard)
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
   @Post('create')
+  @Roles('admin')
   @Header('content-type', 'application/json')
   async create(@Body() createCatDto: CreateCatDto) {
     if (createCatDto.hasOwnProperty('name')) {

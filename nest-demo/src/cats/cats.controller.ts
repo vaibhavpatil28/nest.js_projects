@@ -23,15 +23,15 @@ import { Roles } from 'src/common/decorators/roles.decorator';
 import { RolesGuard } from 'src/common/guard/roles.guard';
 
 @Controller('cats')
-@UseGuards(RolesGuard)
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
   @Post('create')
+  @UseGuards(RolesGuard)
   @Roles('admin')
   @Header('content-type', 'application/json')
   async create(@Body() createCatDto: CreateCatDto) {
     if (createCatDto.hasOwnProperty('name')) {
-      this.catsService.create(createCatDto);
+      return this.catsService.create(createCatDto);
     }
   }
 

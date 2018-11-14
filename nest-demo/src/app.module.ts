@@ -9,9 +9,6 @@ import { CatSchema } from './cats/schemas/cat.schema';
   imports: [
     MongooseModule.forRoot('mongodb://localhost/nest'),
     CatsModule,
-    // MongooseModule.forFeature([
-    //   { name: 'Cat', schema: CatSchema, collection: 'cat' },
-    // ]),
   ],
   controllers: [AppController],
   providers: [AppService],

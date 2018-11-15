@@ -18,16 +18,15 @@ import {
 import { CreateCatDto } from './dto/create-cat.dto';
 import { CatsService } from './cats.service';
 import { Cat } from './interface/cat.interface';
-import { CustomValidationPipe } from 'src/common/pipes/custom-validation/custom-validation.pipe';
-import { Roles } from 'src/common/decorators/roles.decorator';
-import { RolesGuard } from 'src/common/guard/roles.guard';
+import { Role } from '../common/decorators/role.decorator';
+import { RolesGuard } from '../common/guard/roles.guard';
 
 @Controller('cats')
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
   @Post('create')
   @UseGuards(RolesGuard)
-  @Roles('admin')
+  @Role('admin')
   @Header('content-type', 'application/json')
   async create(@Body() createCatDto: CreateCatDto) {
     if (createCatDto.hasOwnProperty('name')) {
@@ -44,7 +43,6 @@ export class CatsController {
     return this.catsService.findAll();
   }
   @Get(':id')
-  @UsePipes(new CustomValidationPipe())
   findOne(@Param('id') id) {
     return `This action returns a #${id} cat`;
   }

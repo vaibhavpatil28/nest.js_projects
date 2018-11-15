@@ -14,7 +14,7 @@ export class CatsService {
     }
   
     async findAll(): Promise<Cat[]> {
-      let cat= await this.catModel.find();
+      let cat= await this.catModel.find();      
       // cat.select('name age');
       let cat1 = await this.catOldModel.find();
       cat.push(...cat1);

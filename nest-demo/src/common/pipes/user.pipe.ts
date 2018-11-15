@@ -4,7 +4,7 @@ import { ArgumentMetadata, Injectable, PipeTransform, BadRequestException } from
 export class UserPipe implements PipeTransform {
   transform(value: any, metadata: ArgumentMetadata) {
     console.log('value ==========>', typeof value);
-    if (!value.hasOwnProperty('username')) {
+    if (!value.hasOwnProperty('userName')) {
       throw new BadRequestException('there is no username field');
     }
     if (!value.hasOwnProperty('password')) {
